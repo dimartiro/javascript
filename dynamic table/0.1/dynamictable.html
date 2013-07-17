@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Dynamic Table</title>
+	<link rel="stylesheet" type="text/css" href="dynamictable.css">
+	<script type="text/javascript" src="http://underscorejs.org/underscore.js"></script>
+	<script type="text/javascript" src="https://rawgithub.com/timrwood/moment/2.1.0/min/moment.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	<script type="text/javascript" src="dynamictable.js"></script>
+</head>
+<body ng-controller="ctrlr">
+	<div style="margin-bottom:40px">
+		<form ng-submit="agregarFecha()">
+			<input type="date" ng-model="fechai" required>
+			<input type="date" ng-model="fechaf" required>
+			<button type="submit">Agregar</button>
+		</form>
+	</div>
+
+	<div id="table">
+		<span ng-click="gotoOption()" style="cursor:pointer">{{option}}</span><span id="titulo">{{titulo}}</span></p>
+		<div id="coso" ng-style="movePage()">
+			<div class="content" id="content1">
+				<ul ng-repeat="dato in datos">
+					<li ng-repeat="hora in dato.horas" class="item-listado-principal" ng-click="eliminarFechaHora(dato.fecha,hora)">
+						<div>
+							<span style="font-size:14px">{{dato.fecha}}</span><br>
+							<span style="font-size:12px">{{hora[0]}} - {{hora[1]}}</span>
+							<br>
+							<p>Eliminar</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div class="content" id="content2">
+				<ul>
+					<li ng-repeat="dato in datos" ng-click="next(dato.fecha)" class="item-listado-fechas">
+						<div>
+							<span>{{dato.fecha}}</span>
+							<p>Agregar Horario</p>
+						</div>
+
+						
+					</li>
+				</ul>
+			</div>
+			
+			<div class="content" id="content3" style="text-align:center">
+				<h4 style="text-align:center">Configuracion de horario</h4>
+				<form ng-submit="agregarHora()">
+					Hora de inicio: <input type="time" ng-model="hrinicio" required>
+					Hora de fin: <input type="time" ng-model="hrfin" required>
+					<button type="submit">Terminar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
