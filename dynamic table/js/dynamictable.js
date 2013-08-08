@@ -5,7 +5,6 @@ underscore.factory('_', function() {
 
 var app = angular.module('app', ['underscore']);
 
-
 app.controller('ctrlr', function($scope, _){
 	$scope.titulo = "Listado"
 	$scope.option = "Listado de fechas"

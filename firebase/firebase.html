@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Prueba Firebase</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	<script src="http://cdn.firebase.com/v0/firebase.js"></script>
+	<script src="http://firebase.github.io/angularFire/angularFire.js"></script>
+	<script>
+		var myapp = angular.module('myapp', ['firebase']);
+
+		myapp.controller('MyCtrl', ['$scope', 'angularFire',
+		  function MyCtrl($scope, angularFire) {
+		  	var url = 'https://diego2737.firebaseio.com/items';
+			var promise = angularFire(url, $scope, 'items', []);
+		  }
+		]);
+	</script>
+</head>
+<body ng-app="myapp">
+	<ul ng-controller="MyCtrl">
+	  <li ng-repeat="item in items">{{item.name}}: {{item.desc}}</li>
+	</ul>
+</body>
+</html>
