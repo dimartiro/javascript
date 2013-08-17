@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Prueba Firebase</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	<script src="http://cdn.firebase.com/v0/firebase.js"></script>
+	<script src="http://firebase.github.io/angularFire/angularFire.js"></script>
+	<script>
+		var myapp = angular.module('myapp', ['firebase']);
+
+		myapp.controller('MyCtrl', ['$scope', 'angularFire',
+		  function MyCtrl($scope, angularFire) {
+		  	var url = 'https://diego2737.firebaseio.com/chat';
+			var promise = angularFire(url, $scope, 'msglist', []);
+
+			$scope.sendMsg = function(){
+				$scope.msglist.push({'from':$scope.user,'body':$scope.newMsg});
+				$scope.newMsg = "";
+			}
+		  }
+		]);
+	</script>
+</head>
+<body ng-app="myapp" ng-controller="MyCtrl">
+	<ul>
+	  <h2 ng-hide="msglist">No Messages</h2>
+	  <li ng-repeat="msg in msglist">{{msg.from}}: {{msg.body}}</li>
+	</ul>
+
+	<form ng-submit="sendMsg()">
+		<input type="text" placeholder="Type your message here" ng-model="user">
+		<input type="text" placeholder="Type your message here" ng-model="newMsg">
+		<input type="submit" value="Send">
+	</form>
+</body>
+</html>
