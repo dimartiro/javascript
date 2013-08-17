@@ -13,6 +13,7 @@
 		  function MyCtrl($scope, angularFire) {
 		  	var url = 'https://diego2737.firebaseio.com/chat';
 			var promise = angularFire(url, $scope, 'msglist', []);
+			$scope.user = "Anonymous"
 
 			$scope.sendMsg = function(){
 				$scope.msglist.push({'from':$scope.user,'body':$scope.newMsg});
@@ -21,16 +22,48 @@
 		  }
 		]);
 	</script>
-</head>
-<body ng-app="myapp" ng-controller="MyCtrl">
-	<ul>
-	  <h2 ng-hide="msglist">No Messages</h2>
-	  <li ng-repeat="msg in msglist">{{msg.from}}: {{msg.body}}</li>
-	</ul>
+	<style type="text/css">
+		.center{
+			text-align: center;
+		}
 
-	<form ng-submit="sendMsg()">
-		<input type="text" placeholder="Type your message here" ng-model="user">
-		<input type="text" placeholder="Type your message here" ng-model="newMsg">
+		.left{
+			text-align: left;
+		}
+
+		.title{
+			border-bottom: 1px solid black;
+		}
+
+		#chat-container{
+			box-shadow: inset 0px 0px 5px;
+			padding: 2px 20px 2px 20px;
+		}	
+
+		.chatmsg{
+			margin-bottom: 10px;
+		}
+
+		#newmsg{
+
+		}
+	</style>
+</head>
+<body ng-app="myapp" ng-controller="MyCtrl" class="center">
+	<h1 class="title">Chat Demo</h1>
+	<div id="chat-container" class="left">	
+		<h2 ng-hide="msglist">No Messages</h2>
+		<dl>
+			<div ng-repeat="msg in msglist" class="chatmsg">
+				<dt><i>{{msg.from}} Says:</i></dt>
+				<dd>{{msg.body}}</dd>		
+			</div> 
+		</dl>
+	</div>
+
+	<form ng-submit="sendMsg()" class="left">
+		<input type="text" placeholder="User" ng-model="user" required>
+		<input type="text" placeholder="Message" ng-model="newMsg" required>
 		<input type="submit" value="Send">
 	</form>
 </body>
