@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Prueba Canvas</title>
+	<script type="text/javascript">
+
+		barras = [];
+
+		function vector(x,y){
+			this.x = x
+			this.y = y 
+		}
+
+		function bola(x,y,radio,velocidad){
+			this.x = x
+			this.y = y
+			this.radio = radio
+			this.velocidad = velocidad
+
+			this.mover = function(){
+				this.x += this.velocidad.x
+				this.y += this.velocidad.y
+			}
+
+			this.toquebarra = function(barra){
+				return (this.x > barra.x && this.x < barra.x + barra.width && this.y > barra.y && this.y < barra.y + barra.height)
+			}
+
+			this.toquebordelateral = function(){
+				return this.x > 800 || this.x < 0
+			}
+
+			this.toquebordevertical = function(){
+				return this.y < 0
+			}
+		}
+
+		function barra(x,y){
+			this.x = x
+			this.y = y
+			this.width = 100
+			this.height = 20
+		}
+
+		function jugador(x,y){
+			this.x = x
+			this.y = y
+			this.width = 200
+			this.height = 20
+			this.velocidad = 2
+
+			this.moverDer = function(){
+				this.velocidad += 4
+				this.x += this.velocidad
+			}
+
+			this.moverIzq = function(){
+				this.velocidad += 4
+				this.x -= this.velocidad
+			}
+		}
+
+		var velocidad = new vector(2,-6)
+		var bola1 = new bola(400,250,10,velocidad)
+		var jugador1 = new jugador(300,480)
+		var c,ctx,interval;
+
+		window.onload = function(){
+			c=document.getElementById("canvas");
+			ctx=c.getContext("2d");
+			ubicarbarras()
+			ctx.fillStyle="#000000";
+			ctx.fillRect(0,0,800,500);
+			ctx.fillStyle="#FF0000";
+			ctx.fillRect(jugador1.x,jugador1.y,jugador1.width,jugador1.height)
+			ctx.fillStyle="#00FF00";
+			ctx.beginPath();
+			ctx.arc(bola1.x,bola1.y,bola1.radio,0,2*Math.PI);
+			ctx.closePath();
+			ctx.fill();
+			interval = setInterval(function(){
+				update()
+			},20)
+		}
+
+		function update(){
+			ctx.fillStyle="#000000";
+			ctx.fillRect(0,0,800,500);
+			ctx.fillStyle="#FF0000";
+			ctx.fillRect(jugador1.x,jugador1.y,jugador1.width,jugador1.height)
+			ctx.fillStyle="#00FF00";
+			ctx.beginPath();
+			bola1.mover()
+			ctx.arc(bola1.x,bola1.y,bola1.radio,0,2*Math.PI);
+			ctx.closePath();
+			ctx.fill();
+			for(i in barras){
+				barrita = barras[i];
+				ctx.fillStyle=barrita.color;
+				ctx.fillRect(barrita.x,barrita.y,barrita.width,barrita.height)
+				if(bola1.toquebarra(barrita)){
+					barras.splice(i,1)
+					bola1.velocidad.y = -bola1.velocidad.y
+				}
+			}	
+			if(bola1.toquebarra(jugador1)){
+				bola1.velocidad.y = -bola1.velocidad.y
+			}
+			if(bola1.toquebordevertical()){
+				bola1.velocidad.y = -bola1.velocidad.y
+			}
+			if(bola1.toquebordelateral()){
+				bola1.velocidad.x = -bola1.velocidad.x
+			}
+			if(bola1.y > 500){
+				alert("PERDISTEEEEEEEE")
+				clearInterval(interval)
+			}
+		}
+
+		function ubicarbarras(){
+			for(i=0;i<=8;i++){
+				for(j=0;j<=5;j++){
+					if(Math.random() < 0.5){
+						barrita = new barra(i*100,j*20)
+						barrita.color = '#'+Math.floor(Math.random()*16777215).toString(16)
+						barras.push(barrita)
+					}
+				}
+			}
+			update()
+		}
+
+		window.onkeydown = function(e){
+			if(e.keyCode === 39){
+				jugador1.moverDer()
+			}
+			if(e.keyCode === 37){
+				jugador1.moverIzq()
+			}		
+		}
+
+		window.onkeyup = function(){
+			jugador1.velocidad = 2
+		}
+
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="500">
+		No soportas canvas
+	</canvas>
+</body>
+</html>

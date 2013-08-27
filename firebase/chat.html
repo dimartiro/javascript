@@ -12,7 +12,7 @@
 		myapp.controller('MyCtrl', ['$scope', 'angularFire',
 		  function MyCtrl($scope, angularFire) {
 		  	var url = 'https://diego2737.firebaseio.com/chat';
-			var promise = angularFire(url, $scope, 'msglist', []);
+			angularFire(url, $scope, 'msglist', []);
 			$scope.user = "Anonymous"
 
 			$scope.sendMsg = function(){
