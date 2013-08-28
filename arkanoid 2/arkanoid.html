@@ -3,8 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Prueba Canvas</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	<script src="http://cdn.firebase.com/v0/firebase.js"></script>
+	<script src="http://firebase.github.io/angularFire/angularFire.js"></script>
 	<script type="text/javascript">
 
+
+		var myapp = angular.module('myapp', ['firebase']);
+
+		myapp.controller('MyCtrl', ['$scope', 'angularFire',
+		  function MyCtrl($scope, angularFire) {
+		  	var url = 'https://ark.firebaseio.com/ark';
+			angularFire(url, $scope, 'ark', [])
+			window.scope = $scope
 
 
 
@@ -64,7 +75,7 @@
 				}
 			}
 
-			var velocidad = new vector(2,-6)
+			var velocidad = new vector(4,1)
 			var bola1 = new bola(400,250,10,velocidad)
 			var jugador1 = new jugador(300,480)
 			var c,ctx,interval;
@@ -121,6 +132,15 @@
 					clearInterval(interval)
 				}
 
+				if(scope.ark != undefined){
+					ctx.fillStyle="#00FF00";
+					ctx.beginPath();
+					console.log($scope.ark)
+					ctx.arc(scope.ark[0].x,scope.ark[0].y,10,0,2*Math.PI);
+					ctx.closePath();
+					ctx.fill();
+				}
+
 			}
 
 			ubicarbarras = function(){
@@ -149,6 +169,9 @@
 				jugador1.velocidad = 2
 			}
 
+
+		  }
+		]);
 
 		
 
