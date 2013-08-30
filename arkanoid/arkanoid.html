@@ -52,16 +52,6 @@
 				this.width = 200
 				this.height = 20
 				this.velocidad = 2
-
-				this.moverDer = function(){
-					this.velocidad += 4
-					this.x += this.velocidad
-				}
-
-				this.moverIzq = function(){
-					this.velocidad += 4
-					this.x -= this.velocidad
-				}
 			}
 
 			var velocidad = new vector(2,-6)
@@ -107,6 +97,9 @@
 						bola1.velocidad.y = -bola1.velocidad.y
 					}
 				}	
+				if(barras.length == 0)
+					alert("Ganaste!!!")
+
 				if(bola1.toquebarra(jugador1)){
 					bola1.velocidad.y = -bola1.velocidad.y
 				}
@@ -136,13 +129,8 @@
 				update()
 			}
 
-			window.onkeydown = function(e){
-				if(e.keyCode === 39){
-					jugador1.moverDer()
-				}
-				if(e.keyCode === 37){
-					jugador1.moverIzq()
-				}		
+			window.onmousemove = function(e){
+				jugador1.x = e.x
 			}
 
 			window.onkeyup = function(){
@@ -155,7 +143,7 @@
 	</script>
 </head>
 <body>
-	<canvas id="canvas" width="800" height="500">
+	<canvas id="canvas" width="800" height="500" style="cursor:none">
 		No soportas canvas
 	</canvas>
 </body>
