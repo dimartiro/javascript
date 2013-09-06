@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Prueba Canvas</title>
+	<script type="text/javascript">
+
+		function f(x) {
+		    return 50 * Math.sin(0.1 * x) + 50;
+		}
+
+		function dibujar(){
+			canvas = document.getElementById("canvas");
+			points = {}; // Keep track of the points in an object with key = x, value = y
+			counter = 0; // Keep track when the moving code should start
+
+			if (canvas.getContext("2d")) {
+			    var ctx = canvas.getContext("2d");
+			    ctx.lineWidth = 3;
+			    var x = 0,
+			        y = f(0);
+			    var timeout = setInterval(function() {
+			        if(counter < canvas.width) { // If it doesn't need to move, draw like you already do
+			            ctx.beginPath();
+			            ctx.moveTo(x, y);
+			            points[x] = y;
+			            x += 1;
+			            y = f(x);
+			            ctx.lineTo(x, y);
+			            ctx.stroke();
+			            if (x > 1000) {
+			                clearInterval(timeout);
+			            }
+			        } else { // The moving part...
+			            ctx.clearRect(0, 0, canvas.width, canvas.height);
+			            ctx.beginPath();
+			            points[x] = y;
+			            x += 1;
+			            y = f(x);
+			            for(var i = 0; i < canvas.width; i++) {
+			                ctx.lineTo(i, points[i + counter - canvas.width]);
+			            }
+			            ctx.stroke();
+			        }
+			        counter++;
+			    }, 10);
+			}
+		}
+
+		window.onload = function(){
+			dibujar()
+		}
+
+		
+
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="300" height="100">
+		No soportas canvas
+	</canvas>
+</body>
+</html>
