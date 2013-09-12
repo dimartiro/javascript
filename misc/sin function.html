@@ -28,9 +28,9 @@
 			            y = f(x);
 			            ctx.lineTo(x, y);
 			            ctx.stroke();
-			            if (x > 1000) {
+			            if (x > 1000)
 			                clearInterval(timeout);
-			            }
+			            
 			        } else { // The moving part...
 			            ctx.clearRect(0, 0, canvas.width, canvas.height);
 			            ctx.beginPath();
