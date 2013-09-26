@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Complex polylines</title>
+    <style type="text/css">
+		html, body {
+		  height: 100%;
+		  margin: 0;
+		  padding: 0;
+		}
+
+		#map-canvas, #map_canvas {
+		  height: 80%;
+		  width: 100%;
+		}
+
+		#points,#code{
+			width: 50%;
+			height: auto;
+			vertical-align: top
+		}
+
+		#code{
+			margin-left: -5px;
+		}
+
+		#points{
+			border-right: 1px solid black
+		}
+
+		.inline-block{
+			display: inline-block;
+		}
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+    <script src="generator.js"></script>
+  </head>
+  <body ng-controller="ctrl">
+    <div id="map-canvas" class="inline-block"></div>
+    <div id="points" class="inline-block">
+    	<h2>Generated Points</h2>
+		<hr>
+		<ul>
+			<li ng-repeat="point in pathPoints">[ {{point.mb}} , {{point.nb}} ]</li>
+		</ul>
+    </div>
+     <div id="code" class="inline-block">
+    	<button ng-click="generateCode()" style="margin:21px">Generate path code</button>
+		<hr>
+		<pre>
+			{{code}}
+		</pre>
+    </div>
+  </body>
+</html>
