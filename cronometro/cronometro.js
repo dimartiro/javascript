@@ -37,12 +37,12 @@ function iniciarcronometro(){
 
 function detenercronometro(){
 	clearInterval(intervalid)
-	iniciado = false
 	$("#iniciar-detener").html("Iniciar")
 }
 
 function resetearcronometro(){
 	detenercronometro();
+	iniciado = false
 	$("#mili,#secondl,#secondh,#minl,#minh").html(0)
 }
 
