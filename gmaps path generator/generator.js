@@ -28,8 +28,7 @@ function addLatLng(event) {
   var path = poly.getPath();
 
   path.push(event.latLng);
-
-  $scope.pathPoints = path.b
+  $scope.pathPoints = path.getArray()
   $scope.$apply()
 
 
@@ -53,7 +52,7 @@ function ctrl($scope){
     code = "varName = [ \n"
     
     angular.forEach($scope.pathPoints, function(point,i) {
-      code += "new google.maps.LatLng("+point.mb+","+point.nb+")"
+      code += "new google.maps.LatLng("+point.lat()+","+point.lng()+")"
       if(i<$scope.pathPoints.length -1)
         code += ","
       code+="\n"
