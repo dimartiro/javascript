@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<title>Login</title>
+	<script>
+      $(document).ready(function(){
+        var socket = io();
+        $('form').submit(function(){
+          socket.emit('login', $('#u').val());
+          $('#u').val('');
+          return false;
+        });
+      })
+    </script>
+</head>
+<body>
+	<form action="">
+      <input id="u" autocomplete="off" /><button type="submit">Login</button>
+    </form>
+</body>
+</html>
